@@ -1,11 +1,14 @@
 import express from 'express';
-const app = express();
-const port = 3000;
+import routes from './services';
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+const app = express();
+const port = process.env.port || 3000;
+const apiVersion = "/api/v1";
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(`${apiVersion}`, routes);
 
 app.listen(port, () => {
-  return console.log(`Express is listening at http://localhost:${port}`);
+  return console.log(`Express is listening at http://localhost:${port}${apiVersion}`);
 });
